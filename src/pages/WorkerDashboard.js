@@ -1,7 +1,7 @@
 // src/pages/Worker/Dashboard.js (Premium Styled Version)
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShoppingCart, History, User, LogOut, Package, Bell, Search, Heart } from 'lucide-react';
+import { ShoppingCart, History, User, LogOut, Package, Bell, Search, Heart, Menu, X } from 'lucide-react';
 import MedicineSearch from '../components/MedicineSearch';
 import CartPage from '../components/Cart/CartPage';
 import BillHistory from '../components/Billing/BillHistory';
@@ -21,6 +21,7 @@ const WorkerDashboard = () => {
   const { getCartSummary, cart } = useCart();
   const [activeView, setActiveView] = useState('search');
   const [cartWarnings, setCartWarnings] = useState([]);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const [showStockRequest, setShowStockRequest] = useState(false);
@@ -34,7 +35,7 @@ const WorkerDashboard = () => {
   useEffect(() => {
     const fetchMedicines = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://pharma-smoky.vercel.app/api'}/tablets/popular?limit=100`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://pharma-smoky.vercel.app'}/tablets/popular?limit=100`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
@@ -90,6 +91,12 @@ const WorkerDashboard = () => {
 
   const handleSavedItemsClick = () => {
     navigate('/worker/saved-items');
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleViewChange = (viewId) => {
+    setActiveView(viewId);
+    setIsMobileMenuOpen(false);
   };
 
   const navigationItems = [
@@ -128,10 +135,65 @@ const WorkerDashboard = () => {
 
   return (
     <div className="worker-premium-dashboard">
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="worker-premium-mobile-overlay"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Sidebar Menu */}
+      <div className={`worker-premium-mobile-sidebar ${isMobileMenuOpen ? 'worker-premium-mobile-sidebar-open' : ''}`}>
+        <div className="worker-premium-mobile-sidebar-header">
+          <div className="worker-premium-mobile-sidebar-title">
+            <Package className="worker-premium-icon" />
+            <span>Menu</span>
+          </div>
+          <button 
+            className="worker-premium-mobile-sidebar-close"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <X className="worker-premium-icon" />
+          </button>
+        </div>
+
+        <div className="worker-premium-mobile-sidebar-content">
+          {navigationItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeView === item.id;
+            
+            return (
+              <button
+                key={item.id}
+                onClick={() => item.action ? item.action() : handleViewChange(item.id)}
+                className={`worker-premium-mobile-menu-item ${isActive ? 'worker-premium-mobile-menu-item-active' : ''}`}
+              >
+                <Icon className="worker-premium-mobile-menu-icon" />
+                <span className="worker-premium-mobile-menu-label">{item.label}</span>
+                {item.count > 0 && (
+                  <span className="worker-premium-mobile-menu-badge">
+                    {item.count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Header */}
       <header className="worker-premium-header">
         <div className="worker-premium-header-container">
           <div className="worker-premium-header-content">
+            {/* Mobile Menu Button */}
+            <button 
+              className="worker-premium-mobile-menu-btn"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <Menu className="worker-premium-icon" />
+            </button>
+
             {/* Logo and Title */}
             <div className="worker-premium-logo-section">
               <div className="worker-premium-logo-icon">
@@ -240,7 +302,7 @@ const WorkerDashboard = () => {
               return (
                 <button
                   key={item.id}
-                  onClick={() => setActiveView(item.id)}
+                  onClick={() => item.action ? item.action() : handleViewChange(item.id)}
                   className={`worker-premium-nav-tab ${isActive ? 'worker-premium-nav-tab-active' : ''}`}
                 >
                   <Icon className="worker-premium-nav-icon" />
@@ -265,7 +327,7 @@ const WorkerDashboard = () => {
               <div className="worker-premium-cart-summary-info">
                 <ShoppingCart className="worker-premium-cart-icon" />
                 <span className="worker-premium-cart-text">
-                  {cartUtils.generateCartSummaryText({ items: cart?.items || [] })}
+                  {cartUtils.generateCartSummaryText({ items: [], totalItems: cartSummary.totalItems })}
                 </span>
                 <span className="worker-premium-cart-total">
                   Total: {cartUtils.formatCurrency(cartSummary.totalAmount)}
