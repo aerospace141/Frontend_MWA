@@ -34,7 +34,7 @@ const WorkerDashboard = () => {
   useEffect(() => {
     const fetchMedicines = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/tablets/popular?limit=100`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://pharma-smoky.vercel.app/api'}/tablets/popular?limit=100`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }

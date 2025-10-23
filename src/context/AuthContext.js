@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
 
   const verifyToken = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/verify');
+      const response = await axios.get('https://pharma-smoky.vercel.app/api/auth/verify');
       setUser(response.data.user);
     } catch (error) {
       console.error('Token verification failed:', error);
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials, userType = 'worker') => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/auth/login/${userType}`, credentials);
+      const response = await axios.post(`https://pharma-smoky.vercel.app/api/auth/login/${userType}`, credentials);
       const { token, user } = response.data;
       
       localStorage.setItem('token', token);
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData, userType = 'worker') => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/auth/register/${userType}`, userData);
+      const response = await axios.post(`https://pharma-smoky.vercel.app/api/auth/register/${userType}`, userData);
       const { token, user } = response.data;
       
       localStorage.setItem('token', token);

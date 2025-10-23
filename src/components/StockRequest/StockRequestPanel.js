@@ -25,7 +25,7 @@ const StockRequestPage = () => {
 
   const fetchLowStockCount = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/tablets/popular?limit=200`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://pharma-smoky.vercel.app/api'}/tablets/popular?limit=200`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -56,7 +56,7 @@ const StockRequestPage = () => {
     
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/tablets/search?q=${encodeURIComponent(searchQuery)}`,
+        `${process.env.REACT_APP_API_URL || 'https://pharma-smoky.vercel.app/api'}/tablets/search?q=${encodeURIComponent(searchQuery)}`,
         {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`

@@ -57,7 +57,7 @@ const VendorManagement = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/vendors', {
+      const response = await fetch('https://pharma-smoky.vercel.app/api/vendors', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -121,8 +121,8 @@ const VendorManagement = () => {
     try {
       const token = localStorage.getItem('token');
       const url = editMode 
-        ? `http://localhost:5000/api/vendors/${currentVendor._id}`
-        : 'http://localhost:5000/api/vendors/create';
+        ? `https://pharma-smoky.vercel.app/api/vendors/${currentVendor._id}`
+        : 'https://pharma-smoky.vercel.app/api/vendors/create';
       
       const method = editMode ? 'PUT' : 'POST';
 
@@ -192,7 +192,7 @@ const VendorManagement = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/vendors/${vendorId}`, {
+      const response = await fetch(`https://pharma-smoky.vercel.app/api/vendors/${vendorId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
