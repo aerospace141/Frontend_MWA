@@ -1028,15 +1028,35 @@
 }
 
 @media (max-width: 768px) {
+  .worker-premium-mobile-menu-btn {
+    display: flex;
+  }
+
+  .worker-premium-mobile-overlay {
+    display: block;
+  }
+
+  .worker-premium-mobile-sidebar {
+    display: block;
+  }
+
+  .worker-premium-nav {
+    display: none;
+  }
+
   .worker-premium-header-content {
-    flex-direction: column;
+    flex-direction: row;
     gap: 1rem;
-    align-items: flex-start;
+    align-items: center;
+  }
+
+  .worker-premium-logo-section {
+    flex: 1;
   }
 
   .worker-premium-header-actions {
-    width: 100%;
-    justify-content: space-between;
+    width: auto;
+    justify-content: flex-end;
   }
 
   .worker-premium-user-section {
