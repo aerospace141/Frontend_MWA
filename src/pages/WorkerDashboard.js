@@ -368,7 +368,7 @@ const WorkerDashboard = () => {
         )}
 
         {/* Cart View */}
-        {activeView === 'cart' && <CartPage />}
+        {/* {activeView === 'cart' && <CartPage />} */}
 
         {/* Stock Requests View */}
         {activeView === 'stock-requests' && <MyRequests />}
