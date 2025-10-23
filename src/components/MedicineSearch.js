@@ -194,7 +194,7 @@ const MedicineSearch = () => {
                   Total: ₹{cartTotal.toFixed(2)}
                 </div>
               </div>
-              <div className="medicine-premium-action-buttons">
+              {/* <div className="medicine-premium-action-buttons">
                 <button className="medicine-premium-btn medicine-premium-btn-primary">
                   <Receipt className="medicine-premium-btn-icon" />
                   Generate Bill
@@ -202,7 +202,7 @@ const MedicineSearch = () => {
                 <button className="medicine-premium-btn medicine-premium-btn-secondary">
                   Save for Later
                 </button>
-              </div>
+              </div> */}
             </div>
           </>
         )}
